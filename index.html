@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sovereign HQ — Your Business AI OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #FAFAF8;
+      --off-white: #F2F0EB;
+      --light: #E8E5DF;
+      --mid: #9B9690;
+      --dark: #1A1916;
+      --black: #0D0C0A;
+      --gold: #B8962E;
+      --gold-light: #D4AE50;
+      --gold-bg: rgba(184,150,46,0.07);
+      --ink: #2C2A26;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 4rem;
+      background: var(--white);
+      border-bottom: 1px solid var(--light);
+    }
+
+    .nav-logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--black);
+      color: var(--white);
+      padding: 0.7rem 1.6rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 4rem;
+      border-right: 1px solid var(--light);
+      animation: fadeUp 0.9s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gold-bg);
+      border: 1px solid rgba(184,150,46,0.25);
+      color: var(--gold);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.45rem 0.9rem;
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+    .hero-tag-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-headline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 1.8rem;
+    }
+    .hero-headline .line2 {
+      display: block;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--mid);
+      max-width: 440px;
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+    .btn-primary:hover { background: var(--gold); }
+
+    .btn-ghost {
+      font-size: 0.88rem;
+      color: var(--mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--light);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* Hero divider stats */
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--light);
+    }
+    .hero-stat-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 0.2rem;
+    }
+    .hero-stat-lbl {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ── HERO RIGHT (image panel) ── */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--off-white);
+      animation: fadeIn 1.2s ease 0.3s both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* corner label */
+    .hero-right-label {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--light);
+      padding: 1rem 1.3rem;
+      max-width: 220px;
+    }
+    .hero-right-label strong {
+      display: block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 0.3rem;
+    }
+    .hero-right-label span {
+      font-size: 0.75rem;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      border-top: 1px solid var(--light);
+      border-bottom: 1px solid var(--light);
+      overflow: hidden;
+      padding: 0.9rem 0;
+      background: var(--off-white);
+    }
+    .marquee-track {
+      display: flex;
+      animation: marquee 30s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 0 2.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+    .marquee-sep {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── SERVICES STRIP ── */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--light);
+    }
+    .service {
+      padding: 3.5rem 3rem;
+      border-right: 1px solid var(--light);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service:last-child { border-right: none; }
+    .service::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px; width: 0;
+      background: var(--gold);
+      transition: width 0.4s ease;
+    }
+    .service:hover { background: var(--off-white); }
+    .service:hover::after { width: 100%; }
+
+    .service-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .service-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 0.9rem;
+      line-height: 1.2;
+    }
+    .service-body {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--mid);
+    }
+
+    /* ── INDUSTRIES BAND ── */
+    .industries {
+      padding: 5rem 4rem;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4rem;
+      align-items: start;
+      border-bottom: 1px solid var(--light);
+    }
+    .industries-header {}
+    .section-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--black);
+      line-height: 1.15;
+    }
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--light);
+    }
+    .industry-card {
+      background: var(--white);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+    .industry-card:hover { background: var(--gold-bg); }
+    .industry-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .industry-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 0.4rem;
+    }
+    .industry-desc {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--mid);
+    }
+
+    /* ── CTA BLOCK ── */
+    .cta-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 280px;
+    }
+    .cta-left {
+      background: var(--black);
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cta-left h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 2rem;
+    }
+    .cta-left h2 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .cta-right {
+      background: var(--gold);
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cta-right p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(10,9,6,0.75);
+      max-width: 340px;
+    }
+    .btn-cta-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      width: fit-content;
+      margin-top: 2rem;
+      transition: background 0.2s;
+    }
+    .btn-cta-dark:hover { background: #2C2A26; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid var(--light);
+    }
+    .stat-item {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--light);
+      transition: background 0.2s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: var(--off-white); }
+    .stat-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* responsive */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { height: 55vw; }
+      .hero-left { padding: 3rem 2rem; border-right: none; }
+      nav { padding: 1rem 2rem; }
+      .nav-links { display: none; }
+      .services { grid-template-columns: 1fr; }
+      .service { border-right: none; border-bottom: 1px solid var(--light); }
+      .industries { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 2rem; }
+      .industries-grid { grid-template-columns: 1fr 1fr; }
+      .cta-block { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-bottom: 1px solid var(--light); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Sovereign <span>HQ</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Platform</a></li>
+      <li><a href="#">Industries</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <a href="#audit" class="nav-cta">Get Started →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        AI Operating System
+      </div>
+
+      <h1 class="hero-headline">
+        Your Business.<br/>
+        <span class="line2">Fully Operated.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Persistent AI operators that think, remember, and execute across your entire business — 24/7. No prompting. No enterprise contract.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#audit" class="btn-primary">
+          Deploy Your Operator
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#how" class="btn-ghost">See how it works →</a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-val" data-target="12400" data-suffix="+">0</div>
+          <div class="hero-stat-lbl">Tasks Automated</div>
+        </div>
+        <div>
+          <div class="hero-stat-val" data-target="98" data-suffix="%">0</div>
+          <div class="hero-stat-lbl">Uptime SLA</div>
+        </div>
+        <div>
+          <div class="hero-stat-val">24/7</div>
+          <div class="hero-stat-lbl">Always-On</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <img src="hero.png" alt="AI Command Center" />
+      <div class="hero-right-label">
+        <strong>Sovereign Operator — Active</strong>
+        <span>Running 24/7 across email, calendar, CRM, and workflows</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Memory <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Execution <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Privacy-First <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Multi-Model Routing <span class="marquee-sep"></span></span>
+      <span class="marquee-item">n8n Automation <span class="marquee-sep"></span></span>
+      <span class="marquee-item">24/7 Operations <span class="marquee-sep"></span></span>
+      <span class="marquee-item">No Prompting Required <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Your Stack. Your Data. <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Memory <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Execution <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Privacy-First <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Multi-Model Routing <span class="marquee-sep"></span></span>
+      <span class="marquee-item">n8n Automation <span class="marquee-sep"></span></span>
+      <span class="marquee-item">24/7 Operations <span class="marquee-sep"></span></span>
+      <span class="marquee-item">No Prompting Required <span class="marquee-sep"></span></span>
+      <span class="marquee-item">Your Stack. Your Data. <span class="marquee-sep"></span></span>
+    </div>
+  </div>
+
+  <!-- THREE PILLARS -->
+  <section class="services" id="how">
+    <div class="service">
+      <div class="service-num">01</div>
+      <div class="service-title">Memory</div>
+      <p class="service-body">Your AI OS remembers everything — clients, workflows, preferences, goals. Context doesn't reset. Knowledge compounds over time.</p>
+    </div>
+    <div class="service">
+      <div class="service-num">02</div>
+      <div class="service-title">Execution</div>
+      <p class="service-body">Autonomous operators run 24/7 across your tools — drafting, routing, following up, reporting. You set direction. AI handles the motion.</p>
+    </div>
+    <div class="service">
+      <div class="service-num">03</div>
+      <div class="service-title">Privacy</div>
+      <p class="service-body">Your data never leaves your infrastructure. Private cloud and on-premise deployment — built for regulated industries.</p>
+    </div>
+  </section>
+
+  <!-- INDUSTRIES -->
+  <section class="industries" id="industries">
+    <div class="industries-header">
+      <div class="section-eyebrow">Built For</div>
+      <h2 class="section-title">Industries That Run on Trust</h2>
+    </div>
+    <div class="industries-grid">
+      <div class="industry-card">
+        <div class="industry-icon">🏥</div>
+        <div class="industry-name">Healthcare & Benefits</div>
+        <p class="industry-desc">Patient intake, provider comms, admin automation</p>
+      </div>
+      <div class="industry-card">
+        <div class="industry-icon">🏦</div>
+        <div class="industry-name">Insurance Agencies</div>
+        <p class="industry-desc">Quote follow-up, policy mgmt, client onboarding</p>
+      </div>
+      <div class="industry-card">
+        <div class="industry-icon">💼</div>
+        <div class="industry-name">Professional Services</div>
+        <p class="industry-desc">Proposal generation, client reporting, workflow ops</p>
+      </div>
+      <div class="industry-card">
+        <div class="industry-icon">📊</div>
+        <div class="industry-name">Consulting Firms</div>
+        <p class="industry-desc">Research synthesis, deliverable drafting, pipelines</p>
+      </div>
+      <div class="industry-card">
+        <div class="industry-icon">🏢</div>
+        <div class="industry-name">Boutique Agencies</div>
+        <p class="industry-desc">Content ops, client comms, billing automation</p>
+      </div>
+      <div class="industry-card" style="background:var(--off-white); display:flex; align-items:center; justify-content:center;">
+        <a href="#audit" style="font-family:'Inter',sans-serif; font-size:0.78rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); text-decoration:none;">Your Industry →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-value" data-target="12400" data-suffix="+">0</div>
+      <div class="stat-label">Tasks Completed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" data-target="98" data-suffix="%">0</div>
+      <div class="stat-label">Uptime SLA</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" data-target="3.2" data-suffix="hrs" data-decimal="1">0</div>
+      <div class="stat-label">Saved Per Day / Operator</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">24/7</div>
+      <div class="stat-label">Always-On Operators</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" data-target="5" data-suffix="">0</div>
+      <div class="stat-label">Verticals Served</div>
+    </div>
+  </div>
+
+  <!-- CTA BLOCK -->
+  <div class="cta-block" id="audit">
+    <div class="cta-left">
+      <h2>Ready to stop<br/><em>running your business</em><br/>manually?</h2>
+      <a href="https://sovereign-hq.com/#audit" class="btn-primary" style="width:fit-content;">Book Your AI Audit →</a>
+    </div>
+    <div class="cta-right">
+      <p>No enterprise contract. No consultant dependency. Just infrastructure that works — deployed in days, not months.</p>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(10,9,6,0.5); margin-bottom:1rem;">Starting at</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:var(--black); line-height:1;">$79<span style="font-size:1rem; font-weight:400;">/mo</span></div>
+        <a href="https://sovereign-hq.com/#pricing" class="btn-cta-dark">View Pricing →</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function animateCounter(el) {
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const isDecimal = el.dataset.decimal === '1';
+      const duration = 1800;
+      const start = performance.now();
+      function update(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const ease = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        const value = target * ease;
+        el.textContent = (isDecimal ? value.toFixed(1) : Math.floor(value).toLocaleString()) + suffix;
+        if (t < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    const counters = document.querySelectorAll('[data-target]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(e.target);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(c => observer.observe(c));
+  </script>
+</body>
+</html>
