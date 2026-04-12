@@ -2,10 +2,12 @@
   "version": 2,
   "name": "sovereign-hq",
   "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "hero.jpg", "use": "@vercel/static" }
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "*.jpg", "use": "@vercel/static" },
+    { "src": "*.png", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/pricing", "dest": "/pricing.html" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }
