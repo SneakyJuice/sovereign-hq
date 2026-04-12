@@ -3,7 +3,7 @@
   "name": "sovereign-hq",
   "builds": [
     { "src": "index.html", "use": "@vercel/static" },
-    { "src": "hero.png", "use": "@vercel/static" }
+    { "src": "hero.jpg", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/(.*)", "dest": "/$1" }
