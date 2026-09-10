@@ -1,0 +1,12 @@
+.agents
+AGENTS.md
+CHARTER.md
+DESIGN.md
+hero.jpg
+hero.png
+node_modules
+reports
+.env*
+dist
+.superdesign
+COPY-ROUTER.md

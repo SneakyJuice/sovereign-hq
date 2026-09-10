@@ -1,13 +1,8 @@
 {
-  "version": 2,
-  "name": "sovereign-hq",
-  "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "*.jpg", "use": "@vercel/static" },
-    { "src": "*.png", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/pricing", "dest": "/pricing.html" },
-    { "src": "/(.*)", "dest": "/$1" }
-  ]
+  "version":2,
+  "framework":null,
+  "buildCommand":"npm run build",
+  "outputDirectory":"dist",
+  "rewrites":[{"source":"/pricing","destination":"/pricing.html"}],
+  "headers":[{"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"}]}]
 }

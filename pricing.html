@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pricing — Sovereign HQ</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -358,30 +356,34 @@
       .page-header { padding: 3rem 1.5rem 2rem; }
     }
   </style>
+  <link rel="stylesheet" href="/pricing-command.css">
+  <link rel="icon" href="/mark.svg" type="image/svg+xml">
 </head>
 <body>
+<a class="pricing-skip" href="#main">Skip to content</a>
 
   <nav>
     <a href="/" class="nav-logo">Sovereign <span>HQ</span></a>
     <ul class="nav-links">
-      <li><a href="/#how">Platform</a></li>
+      <li><a href="/#platform">Platform</a></li>
       <li><a href="/#industries">Industries</a></li>
-      <li><a href="/pricing.html">Pricing</a></li>
-      <li><a href="/#audit">About</a></li>
+      <li><a href="/pricing">Pricing</a></li>
+      <li><a href="/#about">About</a></li>
     </ul>
     <a href="/#audit" class="nav-cta">Get Started →</a>
   </nav>
+<main id="main">
 
   <!-- HEADER -->
   <div class="page-header">
     <div class="page-eyebrow">Simple, Transparent Pricing</div>
-    <h1 class="page-title">Your AI OS. Your Budget.</h1>
-    <p class="page-subtitle">No enterprise contract. No consultant tax. Deploy in days — upgrade anytime.</p>
+    <h1 class="page-title">A plan for your next stage.</h1>
+    <p class="page-subtitle">Start with the support your team needs. Build more capacity as your business grows.</p>
 
     <!-- BILLING TOGGLE -->
     <div class="billing-toggle">
-      <button class="toggle-btn active" id="btn-monthly" onclick="setBilling('monthly')">Monthly</button>
-      <button class="toggle-btn" id="btn-annual" onclick="setBilling('annual')">
+      <button class="toggle-btn active" id="btn-monthly" aria-pressed="true" onclick="setBilling('monthly')">Monthly</button>
+      <button class="toggle-btn" id="btn-annual" aria-pressed="false" onclick="setBilling('annual')">
         Annual <span class="save-badge">Save 20%</span>
       </button>
     </div>
@@ -389,14 +391,15 @@
     <!-- PROMO CODE -->
     <div class="promo-wrap">
       <div class="promo-inner">
-        <span class="promo-label">Have a promo code?</span>
+        <label class="promo-label" for="promo-input">Have a promo code?</label>
         <input type="text" class="promo-input" id="promo-input" placeholder="ENTER CODE" maxlength="20" />
         <button class="promo-btn" onclick="applyPromo()">Apply</button>
       </div>
-      <div class="promo-feedback" id="promo-feedback"></div>
+      <div class="promo-feedback" id="promo-feedback" role="status"></div>
     </div>
   </div>
 
+  <noscript><p class="pricing-note">Monthly prices are shown. Enable JavaScript to calculate annual and promotional discounts.</p></noscript>
   <!-- PRICING CARDS -->
   <section class="pricing-section" id="pricing">
     <div class="pricing-grid">
@@ -442,11 +445,11 @@
           <li class="feature-item">Full workflow automation suite</li>
           <li class="feature-item">CRM + outreach integration</li>
           <li class="feature-item">Unlimited connected tools</li>
-          <li class="feature-item">Multi-model routing (GPT-4, Claude, Gemini)</li>
+          <li class="feature-item">Multi-model routing</li>
           <li class="feature-item">n8n automation library</li>
           <li class="feature-item">Priority support + onboarding</li>
         </ul>
-        <a href="/#audit" class="plan-cta">Deploy Your Team →</a>
+        <a href="/#audit" class="plan-cta">Explore Pro →</a>
       </div>
 
       <!-- EXECUTIVE -->
@@ -464,13 +467,13 @@
         <ul class="features-list">
           <li class="feature-item">Unlimited Operators</li>
           <li class="feature-item">Private cloud / on-premise deployment</li>
-          <li class="feature-item">SOC 2 &amp; HIPAA-ready infrastructure</li>
+          <li class="feature-item">Deployment requirements scoped with your team</li>
           <li class="feature-item">Custom model fine-tuning</li>
           <li class="feature-item">White-label option</li>
           <li class="feature-item">Dedicated success engineer</li>
           <li class="feature-item">SLA guarantee + uptime commitment</li>
         </ul>
-        <a href="/#audit" class="plan-cta">Book a Call →</a>
+        <a href="/#audit" class="plan-cta">Explore Your Operation →</a>
       </div>
 
     </div>
@@ -502,17 +505,18 @@
       </div>
       <div class="trust-item">
         <div class="trust-q">What's an "Operator"?</div>
-        <div class="trust-a">A Sovereign Operator is a persistent AI agent assigned to a specific business function — it remembers context, takes action, and runs 24/7.</div>
+        <div class="trust-a">A Sovereign Operator is an AI assistant set up for a part of your business, such as client follow-up or reporting. It uses the context you provide and works within agreed permissions and review steps.</div>
       </div>
     </div>
   </div>
 
   <!-- CTA STRIP -->
   <div class="cta-strip">
-    <h2>Still deciding? <em>Book a free AI Audit.</em></h2>
-    <a href="/#audit" class="cta-strip-btn">Book Your Free Audit →</a>
+    <h2>Still deciding? <em>Prepare your AI audit brief.</em></h2>
+    <a href="/#audit" class="cta-strip-btn">Prepare Your Opportunity Brief →</a>
   </div>
 
+</main>
   <script>
     // ── PRICING DATA ──
     const BASE_PRICES = { lite: 79, pro: 249, exec: 499 };
@@ -584,6 +588,8 @@
 
     function setBilling(type) {
       state.billing = type;
+      document.getElementById('btn-monthly').setAttribute('aria-pressed', String(type === 'monthly'));
+      document.getElementById('btn-annual').setAttribute('aria-pressed', String(type === 'annual'));
       document.getElementById('btn-monthly').classList.toggle('active', type === 'monthly');
       document.getElementById('btn-annual').classList.toggle('active', type === 'annual');
       renderPrices();
@@ -610,7 +616,7 @@
         state.promo = null;
         feedback.textContent = '✗ Invalid code. Try LAUNCH25 or BETA20.';
         feedback.className = 'promo-feedback error';
-        document.getElementById('promo-input').style.borderColor = '#c0392b';
+        document.getElementById('promo-input').style.borderColor = 'var(--error)';
         renderPrices();
       }
     }

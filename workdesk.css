@@ -1,0 +1,33 @@
+/* A tactile, readable work surface; motion follows information between tools. */
+.growth-visual{height:650px;background:radial-gradient(ellipse at 50% 55%,var(--gold-glow),transparent 70%)}
+.business-desk{position:absolute;inset:55px 0 56px;perspective:1300px;isolation:isolate}
+.desk-sources{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-inline:30px;position:relative;z-index:2}
+.desk-source{display:flex;align-items:center;justify-content:center;gap:9px;color:var(--text);font-size:12px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:15px 9px;box-shadow:0 6px 0 var(--bg),0 7px 0 var(--line)}
+.desk-source svg{width:21px;height:21px;color:var(--accent);flex-shrink:0}
+.desk-connections{display:block;width:calc(100% - 60px);height:65px;margin-inline:30px;overflow:visible}
+.desk-wires{fill:none;stroke:var(--accent);stroke-opacity:.35;stroke-width:1.1}
+.desk-signals{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:16 300;stroke-dashoffset:80;opacity:1}.desk-signal{opacity:0}
+.desk-paper-stack{position:relative;margin:-4px 28px 0;transform:rotateX(7deg) rotateY(-9deg) rotateZ(-2deg);transform-style:preserve-3d}
+.desk-paper-stack:before,.desk-paper-stack:after{content:"";position:absolute;inset:0;background:var(--ivory);border:1px solid var(--soft-ink);border-radius:4px;transform:translate(9px,10px);z-index:-1}
+.desk-paper-stack:before{transform:translate(17px,19px);opacity:.55}
+.desk-paper{background:var(--ivory);color:var(--ink);padding:22px 26px 15px;border-radius:4px;box-shadow:0 22px 45px rgba(0,0,0,.35)}
+.desk-paper-heading{display:flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.1em;font-weight:750;color:var(--soft-ink)}.desk-paper-mark{margin-left:auto;font-size:23px}
+.desk-title{font-size:38px;line-height:1.07;letter-spacing:-.045em;margin:20px 0 10px}.desk-title em{color:var(--soft-ink);font-size:1.12em}
+.desk-subtitle{font-size:12px;color:var(--soft-ink);margin:0 0 16px}
+.desk-job{display:flex;align-items:center;gap:12px;padding:13px 4px;border-top:1px solid rgba(23,29,25,.17);border-radius:3px}
+.desk-job-icon{font-size:10px;color:var(--soft-ink);width:21px;flex-shrink:0}.desk-job strong{display:block;font-size:13px;line-height:1.4;font-weight:650}.desk-job small{display:block;font-size:10px;color:var(--soft-ink);margin-top:4px}.desk-check{margin-left:auto;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--ivory);font-size:12px;flex-shrink:0}
+.desk-paper-footer{border-top:1px solid rgba(23,29,25,.2);padding-top:12px;margin-top:2px;font-size:9px;color:var(--soft-ink);display:flex;justify-content:space-between}
+.desk-outcome{position:absolute;right:3px;bottom:-4px;display:flex;align-items:center;gap:13px;padding:17px 21px;background:var(--surface);border:1px solid var(--line);border-radius:7px;box-shadow:0 14px 32px rgba(0,0,0,.35);transform:rotate(2deg);z-index:3}
+.desk-outcome-icon{width:29px;height:29px;border:1px solid var(--live);color:var(--live);border-radius:50%;display:grid;place-items:center}.desk-outcome small{display:block;color:var(--live);font-size:9px;letter-spacing:.12em}.desk-outcome strong{display:block;font-size:13px;font-weight:500;margin-top:3px}
+@media(min-width:1001px) and (max-width:1200px){.desk-sources{padding-inline:5px;gap:8px}.desk-source{font-size:10px;gap:6px;padding-inline:7px}.desk-paper-stack{margin-inline:10px}.desk-paper{padding-inline:19px}.desk-title{font-size:34px}.desk-job strong{font-size:12px}.desk-outcome{right:0;padding-inline:15px}.desk-outcome strong{font-size:12px}}
+@media(max-width:1000px){.growth-visual{height:660px;width:580px;max-width:100%}}
+@media(max-width:760px){.growth-visual{height:590px}.business-desk{inset:45px 0 58px}.desk-sources{padding-inline:0;gap:9px}.desk-source{padding:13px 7px;font-size:11px;gap:7px}.desk-source svg{width:18px;height:18px}.desk-connections{height:48px}.desk-paper-stack{margin-inline:6px;transform:rotateX(4deg) rotateY(-5deg) rotateZ(-2deg)}.desk-paper{padding:20px 19px 15px}.desk-title{font-size:33px;margin-top:17px}.desk-paper-heading{font-size:8px;gap:7px}.desk-subtitle{font-size:11px}.desk-job{gap:8px;padding-block:12px}.desk-job strong{font-size:12px}.desk-job small{font-size:10px}.desk-paper-footer{font-size:8px}.desk-outcome{bottom:-5px;right:0;padding:14px 16px}.desk-outcome strong{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.desk-paper-stack{transform:none}.desk-outcome{transform:none}}
+/* Keep the paper and result in document flow at every viewport. */
+.growth-visual{height:auto;display:flex;flex-direction:column;width:100%;min-width:0}
+.growth-visual .visual-top{position:relative;inset:auto;min-height:20px}
+.business-desk{position:relative;inset:auto;margin-top:30px}
+.desk-outcome{position:relative;right:auto;bottom:auto;width:fit-content;max-width:100%;margin:34px 0 0 auto}
+.growth-visual .visual-bottom{position:relative;inset:auto;margin-top:24px}
+@media(max-width:1000px){.growth-visual{width:100%;max-width:580px}}
+@media(max-width:760px){.growth-hero{grid-template-columns:minmax(0,1fr)}.growth-visual{width:100%;max-width:100%}.business-desk{margin-top:24px}.desk-outcome{margin-top:30px}.growth-visual .visual-top{gap:8px}.visual-top .eyebrow{font-size:7px}}

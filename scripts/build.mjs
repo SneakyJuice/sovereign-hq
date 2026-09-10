@@ -1,0 +1,10 @@
+import {build} from 'esbuild';
+import fs from 'node:fs';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+await build({entryPoints:[path.join(root,'src/experience.js')],outfile:path.join(root,'assets/experience.js'),bundle:true,minify:true,format:'esm',target:'es2022',legalComments:'eof'});
+const out=path.join(root,'dist');fs.mkdirSync(out,{recursive:true});
+const files=['index.html','pricing.html','command.css','growth.css','workdesk.css','readiness.css','command.js','pricing-command.css','mark.svg'];
+for(const file of files)fs.copyFileSync(path.join(root,file),path.join(out,file));
+for(const dir of ['fonts','assets'])fs.cpSync(path.join(root,dir),path.join(out,dir),{recursive:true});
+console.log(`Built ${files.length} pages/assets, fonts and bundled GSAP experience.`);
