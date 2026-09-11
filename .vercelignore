@@ -10,3 +10,6 @@ reports
 dist
 .superdesign
 COPY-ROUTER.md
+
+chatbot
+api/chat.js

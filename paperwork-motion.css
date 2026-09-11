@@ -1,0 +1,81 @@
+/* Load after workdesk.css. No styling changes to the readable base paper. */
+#growth-visual { overflow: clip; }
+#business-desk .paperwork-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  overflow: clip;
+  contain: paint;
+  border-radius: 4px;
+  pointer-events: none;
+  perspective: 850px;
+  z-index: 2;
+}
+#business-desk .paperwork-leaf {
+  box-sizing: border-box;
+  position: absolute;
+  left: 20%;
+  top: 48%;
+  width: 60%;
+  height: 39%;
+  padding: 17px 18px;
+  border: 1px solid var(--accent, #d4b77a);
+  border-left-width: 4px;
+  border-radius: 3px 7px 7px 3px;
+  background: var(--ivory, #eee9df);
+  color: var(--ink, #101312);
+  box-shadow: 0 9px 18px rgb(0 0 0 / 18%);
+  transform-origin: 12% 90%;
+  backface-visibility: visible;
+  pointer-events: none;
+  opacity: 0;
+}
+#business-desk .paperwork-leaf-label {
+  display: block;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+#business-desk .paperwork-leaf-lines {
+  display: block;
+  width: 86%;
+  height: 48%;
+  margin-top: 15px;
+  opacity: .24;
+  background: repeating-linear-gradient(to bottom, currentColor 0 1px, transparent 1px 13px);
+  border-bottom: 3px solid var(--accent, #d4b77a);
+}
+#business-desk .paperwork-caption {
+  max-width: 48ch;
+  margin: 20px 0 0;
+  color: var(--muted, #b5bab2);
+  font-size: 12px;
+  line-height: 1.6;
+}
+#business-desk .paperwork-replay {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 4px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent, #d4b77a);
+  font: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+#business-desk .paperwork-replay:hover { text-decoration-thickness: 2px; }
+#business-desk .paperwork-replay:focus-visible { outline: 2px solid var(--accent, #d4b77a); outline-offset: 3px; }
+#business-desk .paperwork-replay:disabled { opacity: .5; cursor: default; }
+#business-desk .paperwork-replay[hidden] { display: none; }
+@media (max-width: 760px) {
+  #business-desk .paperwork-stage { perspective: 650px; }
+  #business-desk .paperwork-leaf { left: 20%; width: 60%; padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #business-desk .paperwork-stage { display: none; }
+}

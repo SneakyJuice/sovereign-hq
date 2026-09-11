@@ -2,12 +2,12 @@ import {practiceWorkflows} from './practice-workflows.js';
 import './readiness.js';
 import {businessWorkflows} from './business-workflows.js';
 import {gsap} from 'gsap';
-import {createDeskMotion} from './desk-motion.js';
+import {createPaperworkCinema} from '../assets/paperwork-cinema.js';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let paused=reduced.matches,heroVisible=true,flowVisible=false;
 const hero=$('#growth-visual'),host=$('#business-desk'),toggle=$('#motion-toggle');
-const deskMotion=createDeskMotion(host);
+const deskMotion=createPaperworkCinema(host);
 toggle.hidden=false;
 function syncMotion(){toggle.textContent=paused?'Resume motion':'Pause motion';toggle.setAttribute('aria-pressed',String(paused));if(paused){gsap.globalTimeline.pause();deskMotion.pause();stopFlow();}else{gsap.globalTimeline.resume();if(heroVisible&&!document.hidden)deskMotion.resume();}document.documentElement.dataset.motion=paused?'paused':'running';}
 toggle.addEventListener('click',()=>{paused=!paused;syncMotion();});
