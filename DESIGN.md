@@ -25,3 +25,6 @@ Medium scope. Signature: five real ivory documents lift, turn and gather into a 
 
 ## Shared knowledge loop
 Anthony approved production on 2026-09-11 for this iteration. Ten-second continuous cycle: paperwork gathers, dissolves into a connected ceramic cloud / knowledge hub, then returns to the exact opening frame. One global pause/resume control; no replay button. Reduced motion remains static. Blender VSE assembles the existing Unreal-choreographed paper segment with a newly authored Blender knowledge scene.
+
+## Focused website offer page
+Standalone /website-design keeps the $350 new-client scope and short enquiry route together. Editorial charcoal/brass introduction beside an ivory form on desktop; stacked offer and form on mobile, with an immediate anchor CTA. No decorative motion. Homepage keeps compact promotion; public consent describes storing details and responding without naming the CRM provider.
