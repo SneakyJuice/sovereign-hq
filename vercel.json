@@ -5,6 +5,17 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sovereign-hq.com"
+        }
+      ],
+      "destination": "https://sovereign-hq.com/",
+      "statusCode": 301
+    },
+    {
       "source": "/:path*",
       "has": [
         {
