@@ -33,15 +33,19 @@ test('sitemap.xml lists only indexable apex URLs', () => {
   assert.doesNotMatch(xml, /pricing|privacy|terms/i);
 });
 
-test('vercel.json permanently redirects www host to apex for all paths', () => {
+test('vercel.json permanently redirects www host to apex for all paths including root', () => {
   const config = JSON.parse(read('vercel.json'));
-  const match = (config.redirects || []).find((rule) =>
-    rule.has?.some((condition) => condition.type === 'host' && condition.value === 'www.sovereign-hq.com')
-    && rule.destination === 'https://sovereign-hq.com/:path*'
-    && (rule.statusCode === 301 || rule.permanent === true)
-    && rule.source === '/:path*',
+  const wwwHost = (rule) =>
+    rule.has?.some((condition) => condition.type === 'host' && condition.value === 'www.sovereign-hq.com');
+  const permanent = (rule) => rule.statusCode === 301 || rule.permanent === true;
+  const root = (config.redirects || []).find((rule) =>
+    wwwHost(rule) && permanent(rule) && rule.source === '/' && rule.destination === 'https://sovereign-hq.com/',
   );
-  assert.ok(match, 'missing www.sovereign-hq.com → https://sovereign-hq.com/:path* permanent redirect');
+  const rest = (config.redirects || []).find((rule) =>
+    wwwHost(rule) && permanent(rule) && rule.source === '/:path*' && rule.destination === 'https://sovereign-hq.com/:path*',
+  );
+  assert.ok(root, 'missing www.sovereign-hq.com / → https://sovereign-hq.com/ 301');
+  assert.ok(rest, 'missing www.sovereign-hq.com /:path* → https://sovereign-hq.com/:path* 301');
 });
 
 test('index and website-design carry apex self-canonicals', () => {
