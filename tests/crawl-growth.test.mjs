@@ -38,7 +38,7 @@ test('vercel.json permanently redirects www host to apex for all paths', () => {
   const match = (config.redirects || []).find((rule) =>
     rule.has?.some((condition) => condition.type === 'host' && condition.value === 'www.sovereign-hq.com')
     && rule.destination === 'https://sovereign-hq.com/:path*'
-    && rule.permanent === true
+    && (rule.statusCode === 301 || rule.permanent === true)
     && rule.source === '/:path*',
   );
   assert.ok(match, 'missing www.sovereign-hq.com → https://sovereign-hq.com/:path* permanent redirect');
@@ -93,16 +93,20 @@ test('home offer strip and website-design expose stubbed calendar CTAs; enquiry 
 });
 
 test('build copies crawl files and bakes an https booking URL into dist', () => {
-  execFileSync('node', ['scripts/build.mjs'], {cwd: root, env: {...process.env}});
+  const emptyEnv = {...process.env, SOVEREIGN_BOOKING_URL: '', BOOKING_URL: ''};
+  execFileSync('node', ['scripts/build.mjs'], {cwd: root, env: emptyEnv});
   assert.equal(readFileSync(join(root, 'dist/robots.txt'), 'utf8'), read('robots.txt'));
   assert.equal(readFileSync(join(root, 'dist/sitemap.xml'), 'utf8'), read('sitemap.xml'));
   assert.match(readFileSync(join(root, 'dist/assets/site-config.js'), 'utf8'), /window\.__SOVEREIGN_BOOKING_URL__=""/);
 
   execFileSync('node', ['scripts/build.mjs'], {
     cwd: root,
-    env: {...process.env, SOVEREIGN_BOOKING_URL: 'https://cal.example.com/sovereign-15'},
+    env: {...emptyEnv, SOVEREIGN_BOOKING_URL: 'https://cal.example.com/sovereign-15'},
   });
   const config = readFileSync(join(root, 'dist/assets/site-config.js'), 'utf8');
   assert.match(config, /https:\/\/cal\.example\.com\/sovereign-15/);
   assert.doesNotMatch(config, /calendly\.com|cal\.com\/daymond/i);
+
+  execFileSync('node', ['scripts/build.mjs'], {cwd: root, env: emptyEnv});
+  assert.match(readFileSync(join(root, 'dist/assets/site-config.js'), 'utf8'), /window\.__SOVEREIGN_BOOKING_URL__=""/);
 });

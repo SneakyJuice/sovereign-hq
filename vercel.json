@@ -13,7 +13,7 @@
         }
       ],
       "destination": "https://sovereign-hq.com/:path*",
-      "permanent": true
+      "statusCode": 301
     }
   ],
   "rewrites": [

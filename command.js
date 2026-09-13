@@ -8,11 +8,13 @@ document.querySelectorAll('.mobile-nav a').forEach(link=>link.addEventListener('
    anchor.href=raw;
    anchor.removeAttribute('aria-disabled');
    anchor.removeAttribute('title');
+   anchor.removeAttribute('tabindex');
    anchor.target='_blank';
    anchor.rel='noopener noreferrer';
   }else{
    anchor.href='#';
    anchor.setAttribute('aria-disabled','true');
+   anchor.tabIndex=-1;
    anchor.title='Booking link pending';
    anchor.addEventListener('click',event=>event.preventDefault());
   }
