@@ -1,0 +1,1 @@
+window.__SOVEREIGN_BOOKING_URL__='';
