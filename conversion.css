@@ -4,3 +4,24 @@
 
 
 .conversation-details p a{text-decoration:underline;text-underline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.service-tiers{padding:28px 0 36px;scroll-margin-top:24px}
+.service-tiers .section-heading{margin-bottom:28px}
+.service-tiers .section-heading>p:last-child{max-width:34ch}
+.tier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.tier-card{display:flex;flex-direction:column;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px 20px 20px}
+.tier-card .eyebrow{margin-bottom:8px}
+.tier-card h3{margin:0 0 14px;font-size:22px;font-weight:500;letter-spacing:-.03em;line-height:1.25}
+.tier-price{margin:0 0 16px;color:var(--accent)}
+.tier-amount{display:block;font-size:40px;letter-spacing:-.04em;line-height:1}
+.tier-unit{display:block;margin-top:8px;font-size:14px;letter-spacing:0;line-height:1.4;color:var(--text)}
+.tier-includes{margin:0;font-size:11px;font-weight:650;letter-spacing:.14em;color:var(--muted)}
+.tier-card ul{list-style:none;padding:0;margin:0 0 18px}
+.tier-card li{padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.45;color:var(--muted)}
+.tier-card .button{margin-top:auto;width:100%;justify-content:space-between;gap:16px}
+.tier-starting,.retainer-terms{max-width:78ch;margin:18px 0 0;font-size:13px;line-height:1.6;color:var(--muted)}
+.tier-followup{padding:0 0 72px}
+.tier-followup a{color:var(--accent)}
+.tier-followup p{margin:0 0 12px}
+@media(min-width:901px){.tier-card h3{min-height:2.5em}}
+@media(max-width:900px){.service-tiers .section-heading{grid-template-columns:1fr;row-gap:12px}.service-tiers .section-heading>p:last-child{justify-self:start;max-width:none}.tier-grid{grid-template-columns:1fr}.tier-amount{font-size:36px}}
