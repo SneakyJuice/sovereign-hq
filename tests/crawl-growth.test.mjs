@@ -64,7 +64,7 @@ test('home JSON-LD hooks use only safe known fields', () => {
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /"@type":\s*"Organization"/);
   assert.match(html, /"@type":\s*"LocalBusiness"/);
-  assert.match(html, /<!-- TODO: FAQPage JSON-LD when Anthony\/Virgil approve real Q&A -->/);
+  assert.doesNotMatch(html, /TODO: FAQPage|Anthony\/Virgil approve/);
   assert.doesNotMatch(html, /"@type":\s*"FAQPage"/);
   assert.doesNotMatch(html, /"mainEntity"\s*:\s*\[\]/);
   assert.match(html, /"name":\s*"Sovereign HQ"/);
