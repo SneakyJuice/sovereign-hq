@@ -1,29 +1,37 @@
 document.querySelectorAll('.mobile-nav a').forEach(link=>link.addEventListener('click',()=>document.querySelector('.mobile-nav')?.removeAttribute('open')));
+function httpsUrl(value){
+ try{const url=new URL(String(value||'').trim());return url.protocol==='https:'?url.href:'';}catch{return '';}
+}
 (function applyBookingCtas(){
- const raw=typeof window.__SOVEREIGN_BOOKING_URL__==='string'?window.__SOVEREIGN_BOOKING_URL__.trim():'';
- let ready=false;
- try{ready=Boolean(raw)&&new URL(raw).protocol==='https:';}catch{ready=false;}
+ const configured=httpsUrl(window.__SOVEREIGN_BOOKING_URL__);
+ const stripeMap=window.__SOVEREIGN_STRIPE_PAYMENT_URLS__||{};
  document.querySelectorAll('[data-booking-cta]').forEach(anchor=>{
-  if(ready){
-   anchor.href=raw;
-   anchor.removeAttribute('aria-disabled');
-   anchor.removeAttribute('title');
-   anchor.removeAttribute('tabindex');
-   anchor.target='_blank';
-   anchor.rel='noopener noreferrer';
-  }else{
-   anchor.href='#';
-   anchor.setAttribute('aria-disabled','true');
-   anchor.tabIndex=-1;
-   anchor.title='Booking link pending';
-   anchor.addEventListener('click',event=>event.preventDefault());
-  }
+  const tier=anchor.getAttribute('data-tier')||'';
+  const stripe=httpsUrl(anchor.getAttribute('data-stripe-payment-url'))||httpsUrl(stripeMap[tier]);
+  const next=stripe||configured||httpsUrl(anchor.getAttribute('href'));
+  if(!next)return;
+  anchor.href=next;
+  anchor.target='_blank';
+  anchor.rel='noopener noreferrer';
+  anchor.removeAttribute('aria-disabled');
+  anchor.removeAttribute('title');
+  if(anchor.tabIndex<0)anchor.removeAttribute('tabindex');
  });
- document.querySelectorAll('[data-booking-pending-note]').forEach(note=>{note.hidden=ready;});
+ document.querySelectorAll('[data-booking-pending-note]').forEach(note=>{note.hidden=true;});
 })();
 const form=document.getElementById('audit-form');
+const tierWorkflow={
+ website:'Website — $399 one-time',
+ care:'Website + Care — $599 build + $149/mo',
+ custom:'Websites, apps, portals, automations — starting at $799 + $149/mo'
+};
+if(form){
+ document.querySelectorAll('[data-offer-link]').forEach(a=>a.addEventListener('click',()=>{
+  const label=tierWorkflow[a.getAttribute('data-tier')];
+  if(label&&form.elements.workflow)form.elements.workflow.value=label;
+ }));
+}
 if(form&&window.SovereignBrief){
  SovereignBrief.attachLeadForm(form);
  document.getElementById('brief-download').addEventListener('click',()=>{SovereignBrief.download(Object.fromEntries(new FormData(form)));document.getElementById('form-status').textContent='Your branded HTML brief is ready. Open it to print or save as PDF. Nothing has been submitted.';});
- document.querySelectorAll('[data-offer-link]').forEach(a=>a.addEventListener('click',()=>{form.elements.workflow.value='$350 website design or redesign';}));
 }

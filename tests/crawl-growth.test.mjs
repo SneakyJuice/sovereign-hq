@@ -56,6 +56,7 @@ test('index and website-design carry apex self-canonicals', () => {
 test('pricing is noindex,follow and remains linked from the homepage', () => {
   assert.match(read('pricing.html'), /<meta name="robots" content="noindex,\s*follow">/);
   assert.match(read('index.html'), /href="\/pricing"/);
+  assert.doesNotMatch(read('pricing.html'), /BASE_PRICES|plan-card|billing-toggle|\$79(?!\d)|\$249(?!\d)|\$499(?!\d)/);
 });
 
 test('home JSON-LD hooks use only safe known fields', () => {
@@ -81,21 +82,41 @@ test('website-design includes a safe Organization JSON-LD hook', () => {
   assert.doesNotMatch(html, /aggregateRating|"ratingValue"|"telephone"/i);
 });
 
-test('home offer strip and website-design expose stubbed calendar CTAs; enquiry stays', () => {
-  const home = read('index.html');
-  assert.match(home, /class="website-offer[^"]*"/);
-  assert.match(home, /data-booking-cta/);
-  assert.match(home, /data-booking-cta[^>]*href="#"/);
-  assert.match(home, /data-booking-cta[^>]*aria-disabled="true"/);
-  assert.match(home, /id="audit"/);
-  assert.match(home, /id="enquire"/);
+test('locked service tiers replace the old website offer and SaaS grid', () => {
+  const booking = 'https://cal.com/zion-sealey-hjalio/discovery';
+  const partial = read('partials/service-tiers.html').trim();
+  const pages = ['index.html', 'website-design.html', 'pricing.html'].map(read);
+  for (const html of pages) {
+    assert.ok(html.includes(partial));
+    assert.match(html, /\$399/);
+    assert.match(html, /\$599/);
+    assert.match(html, /\$149\/mo/);
+    assert.match(html, /\$799/);
+    assert.match(html, /\$150\/hr/);
+    assert.match(html, /2-hour monthly cap/);
+    assert.match(html, /No rollover/);
+    assert.match(html, /3-month minimum/);
+    assert.match(html, /30 days/);
+    assert.match(html, /Tier 3 is a starting price/);
+    assert.match(html, /data-stripe-payment-url=""/);
+    assert.equal(html.split('data-booking-cta').length - 1 >= 3, true);
+  }
+  const joined = pages.join('\n');
+  assert.doesNotMatch(joined, /\$350|\$99\/mo|fiverr|href="#"/i);
+  assert.match(joined, new RegExp(booking.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(read('index.html'), /id="audit"/);
+  assert.match(read('index.html'), /id="enquire"/);
+  assert.match(read('website-design.html'), /id="get-started"/);
+  assert.match(read('website-design.html'), /id="audit-form"/);
+});
 
-  const offer = read('website-design.html');
-  assert.match(offer, /data-booking-cta/);
-  assert.match(offer, /data-booking-cta[^>]*href="#"/);
-  assert.match(offer, /data-booking-cta[^>]*aria-disabled="true"/);
-  assert.match(offer, /id="get-started"/);
-  assert.match(offer, /id="audit-form"/);
+test('siteConfigScript uses the locked booking URL unless an https override is set', async () => {
+  const {siteConfigScript, resolveBookingUrl} = await import('../scripts/seo.mjs');
+  assert.equal(resolveBookingUrl({}), '');
+  assert.match(siteConfigScript({}), /https:\/\/cal\.com\/zion-sealey-hjalio\/discovery/);
+  assert.match(siteConfigScript({}), /__SOVEREIGN_STRIPE_PAYMENT_URLS__=\{"website":"","care":"","custom":""\}/);
+  assert.match(siteConfigScript({SOVEREIGN_BOOKING_URL: 'https://cal.example.com/a'}), /https:\/\/cal\.example\.com\/a/);
+  assert.match(siteConfigScript({BOOKING_URL: 'http://insecure.example/book'}), /https:\/\/cal\.com\/zion-sealey-hjalio\/discovery/);
 });
 
 test('build copies crawl files and bakes an https booking URL into dist', () => {
@@ -103,7 +124,7 @@ test('build copies crawl files and bakes an https booking URL into dist', () => 
   execFileSync('node', ['scripts/build.mjs'], {cwd: root, env: emptyEnv});
   assert.equal(readFileSync(join(root, 'dist/robots.txt'), 'utf8'), read('robots.txt'));
   assert.equal(readFileSync(join(root, 'dist/sitemap.xml'), 'utf8'), read('sitemap.xml'));
-  assert.match(readFileSync(join(root, 'dist/assets/site-config.js'), 'utf8'), /window\.__SOVEREIGN_BOOKING_URL__=""/);
+  assert.match(readFileSync(join(root, 'dist/assets/site-config.js'), 'utf8'), /window\.__SOVEREIGN_BOOKING_URL__="https:\/\/cal\.com\/zion-sealey-hjalio\/discovery"/);
 
   execFileSync('node', ['scripts/build.mjs'], {
     cwd: root,
@@ -114,5 +135,5 @@ test('build copies crawl files and bakes an https booking URL into dist', () => 
   assert.doesNotMatch(config, /calendly\.com|cal\.com\/daymond/i);
 
   execFileSync('node', ['scripts/build.mjs'], {cwd: root, env: emptyEnv});
-  assert.match(readFileSync(join(root, 'dist/assets/site-config.js'), 'utf8'), /window\.__SOVEREIGN_BOOKING_URL__=""/);
+  assert.match(readFileSync(join(root, 'dist/assets/site-config.js'), 'utf8'), /window\.__SOVEREIGN_BOOKING_URL__="https:\/\/cal\.com\/zion-sealey-hjalio\/discovery"/);
 });
