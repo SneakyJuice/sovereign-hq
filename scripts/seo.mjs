@@ -1,11 +1,11 @@
 export const DEFAULT_BOOKING_URL = 'https://cal.com/zion-sealey-hjalio/discovery';
 
-/* Stripe payment links. Empty keeps the tier CTA on the booking URL.
-   Keys: website (Tier 1), care (Tier 2), custom (Tier 3). */
+/* Live Stripe Payment Links. Keys match data-tier on each buy button.
+   data-stripe-payment-url on the button wins when it is a valid https URL. */
 export const STRIPE_PAYMENT_URLS = {
-  website: '',
-  care: '',
-  custom: '',
+  website: 'https://buy.stripe.com/cNi8wQ74LcEPe2Ye813oA00',
+  care: 'https://buy.stripe.com/28E3cwcp57kvbUQaVP3oA01',
+  custom: 'https://buy.stripe.com/4gMaEY88PcEP2kg8NH3oA02',
 };
 
 export function resolveBookingUrl(env = process.env) {
