@@ -98,8 +98,13 @@ test('locked service tiers replace the old website offer and SaaS grid', () => {
     assert.match(html, /3-month minimum/);
     assert.match(html, /30 days/);
     assert.match(html, /Tier 3 is a starting price/);
-    assert.match(html, /data-stripe-payment-url=""/);
+    assert.match(html, /data-stripe-payment-url="https:\/\/buy\.stripe\.com\/cNi8wQ74LcEPe2Ye813oA00"/);
+    assert.match(html, /data-stripe-payment-url="https:\/\/buy\.stripe\.com\/28E3cwcp57kvbUQaVP3oA01"/);
+    assert.match(html, /data-stripe-payment-url="https:\/\/buy\.stripe\.com\/4gMaEY88PcEP2kg8NH3oA02"/);
+    assert.match(html, /data-tier="custom"[^>]*>Buy now/);
+    assert.match(html, /Book a discovery call/);
     assert.equal(html.split('data-booking-cta').length - 1 >= 3, true);
+    assert.equal(html.split('data-stripe-cta').length - 1 >= 3, true);
   }
   const joined = pages.join('\n');
   assert.doesNotMatch(joined, /\$350|\$99\/mo|fiverr|href="#"/i);
@@ -114,7 +119,7 @@ test('siteConfigScript uses the locked booking URL unless an https override is s
   const {siteConfigScript, resolveBookingUrl} = await import('../scripts/seo.mjs');
   assert.equal(resolveBookingUrl({}), '');
   assert.match(siteConfigScript({}), /https:\/\/cal\.com\/zion-sealey-hjalio\/discovery/);
-  assert.match(siteConfigScript({}), /__SOVEREIGN_STRIPE_PAYMENT_URLS__=\{"website":"","care":"","custom":""\}/);
+  assert.match(siteConfigScript({}), /__SOVEREIGN_STRIPE_PAYMENT_URLS__=\{"website":"https:\/\/buy\.stripe\.com\/cNi8wQ74LcEPe2Ye813oA00","care":"https:\/\/buy\.stripe\.com\/28E3cwcp57kvbUQaVP3oA01","custom":"https:\/\/buy\.stripe\.com\/4gMaEY88PcEP2kg8NH3oA02"\}/);
   assert.match(siteConfigScript({SOVEREIGN_BOOKING_URL: 'https://cal.example.com/a'}), /https:\/\/cal\.example\.com\/a/);
   assert.match(siteConfigScript({BOOKING_URL: 'http://insecure.example/book'}), /https:\/\/cal\.com\/zion-sealey-hjalio\/discovery/);
 });
