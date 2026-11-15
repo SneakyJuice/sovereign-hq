@@ -141,4 +141,24 @@ test('build copies crawl files and bakes an https booking URL into dist', () => 
 
   execFileSync('node', ['scripts/build.mjs'], {cwd: root, env: emptyEnv});
   assert.match(readFileSync(join(root, 'dist/assets/site-config.js'), 'utf8'), /window\.__SOVEREIGN_BOOKING_URL__="https:\/\/cal\.com\/zion-sealey-hjalio\/discovery"/);
+
+  const loader = 'googletagmanager.com/gtag/js?id=G-B3T60WYGQ4';
+  for (const page of ['index.html', 'pricing.html', 'website-design.html']) {
+    const html = readFileSync(join(root, 'dist', page), 'utf8');
+    assert.equal(html.split(loader).length - 1, 1, page);
+    assert.match(html, /gtag\('config','G-B3T60WYGQ4'\)/);
+    assert.equal(html.includes('GTM-MHKJBNN5'), false);
+    assert.equal(html.includes('googletagmanager.com/gtm.js'), false);
+    assert.equal(html.split('<script src="/assets/analytics.js" defer></script>').length - 1, 1);
+  }
+  assert.match(readFileSync(join(root, 'dist/pricing.html'), 'utf8'), /<meta name="robots" content="noindex,\s*follow">/);
+  const analytics = readFileSync(join(root, 'dist/assets/analytics.js'), 'utf8');
+  for (const name of ['click_call', 'click_email', 'click_book', 'generate_lead']) {
+    assert.equal(analytics.includes(name), true, name);
+  }
+  assert.match(analytics, /transport_type:"beacon"/);
+  assert.equal(analytics.includes('GTM-MHKJBNN5'), false);
+  assert.equal(analytics.includes('googletagmanager.com/gtm.js'), false);
+  assert.equal(readFileSync(join(root, 'dist/robots.txt'), 'utf8'), read('robots.txt'));
+  assert.equal(readFileSync(join(root, 'dist/sitemap.xml'), 'utf8'), read('sitemap.xml'));
 });
